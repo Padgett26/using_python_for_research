@@ -71,7 +71,7 @@ def test_data(test_ts, test_l):
     return test_table
 
 
-def sort_results(test, test_X, predict, prob):
+def sort_results(test, predict, prob):
     """Grabbing the logistic predictions and probabilities, and forming them into a results table."""
     results = []
     for i in range(len(test)):
@@ -81,7 +81,7 @@ def sort_results(test, test_X, predict, prob):
                 test.timestamp.iloc[i],
                 test["UTC time"].iloc[i],
                 predict[i],
-                max(prob[i]),
+                prob[i],
             ]
         )
     return results
@@ -169,7 +169,7 @@ predict = clf.predict(test_X[:])
 prob = clf.predict_proba(test_X[:])
 
 results = pd.DataFrame(
-    sort_results(test_table, test_X, predict, prob),
+    sort_results(test_table, predict, prob),
     columns=["", "timestamp", "UTC time", "label", "accuracy"],
 )
 
